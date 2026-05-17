@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Validador BUSCARV · Ejercicios Excel</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+    body {
+      background: #eef2f7;
+      margin: 0;
+      padding: 28px 20px;
+      color: #1a2c3e;
+    }
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #1f5e7e, #0f3b4f);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.25rem;
+    }
+    .subtitulo {
+      border-left: 5px solid #2c7da0;
+      padding-left: 18px;
+      margin: 8px 0 28px 0;
+      color: #2c5a6e;
+      font-weight: 500;
+    }
+    .card {
+      background: white;
+      border-radius: 28px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+      overflow-x: auto;
+      border: 1px solid #dce5ec;
+    }
+    .card-header {
+      background: #f9fcff;
+      padding: 18px 24px;
+      border-bottom: 2px solid #e2edf2;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+    .card-header h2 {
+      margin: 0;
+      font-weight: 650;
+      font-size: 1.45rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-ej {
+      background: #1e566e;
+      color: white;
+      font-weight: bold;
+      font-size: 0.8rem;
+      padding: 4px 12px;
+      border-radius: 40px;
+    }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    button {
+      background: white;
+      border: 1px solid #cbdae9;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.85rem;
+      color: #1f4e6e;
+    }
+    button.primary {
+      background: #1f5e7e;
+      border-color: #1f5e7e;
+      color: white;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    button.primary:hover {
+      background: #0e445f;
+      transform: translateY(-1px);
+    }
+    button:hover {
+      background: #e6f0f9;
+      border-color: #8ba9c2;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    th {
+      background: #f0f6fa;
+      padding: 14px 10px;
+      text-align: center;
+      font-weight: 700;
+      color: #0b4a65;
+      border-bottom: 1px solid #cbdae9;
+    }
+    td {
+      padding: 12px 6px;
+      text-align: center;
+      border-bottom: 1px solid #e6edf2;
+      vertical-align: middle;
+    }
+    .dato-fijo {
+      background-color: #fef7e0;
+      font-weight: 600;
+      font-family: monospace;
+    }
+    input, select {
+      width: 150px;
+      padding: 8px 6px;
+      text-align: center;
+      border: 1px solid #cbdae9;
+      border-radius: 24px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: white;
+    }
+    select {
+      width: 120px;
+      cursor: pointer;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #2c7da0;
+      box-shadow: 0 0 0 2px rgba(44,125,160,0.2);
+    }
+    .estado {
+      font-weight: 600;
+      min-width: 110px;
+      text-align: center;
+    }
+    .correcto {
+      color: #0f6e3f;
+      background: #dff9e6;
+      border-radius: 40px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      display: inline-block;
+    }
+    .incorrecto {
+      color: #b91c1c;
+      background: #ffe6e5;
+      border-radius: 40px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      display: inline-block;
+    }
+    .mensaje-resumen {
+      background: #eaf4fc;
+      padding: 12px 20px;
+      border-radius: 32px;
+      font-weight: 500;
+      margin: 12px 20px 20px 20px;
+      text-align: center;
+    }
+    .nota-excel {
+      background: #eef2fa;
+      border-left: 4px solid #2c7da0;
+      padding: 12px 18px;
+      margin: 10px 20px 20px 20px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: #1f4e6e;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.75rem;
+      color: #6082a0;
+      border-top: 1px solid #cde0ec;
+      padding-top: 24px;
+    }
+    @media (max-width: 800px) {
+      td, th { padding: 8px 3px; }
+      input, select { width: 110px; font-size: 0.7rem; }
+      .card-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>🔍 Validador Automático · BUSCARV en Excel</h1>
+  <div class="subtitulo">✅ Ejercicios del PDF "Función BUSCARV Ejercicios.pdf" · Comprueba tus resultados con la validación interactiva.</div>
+
+  <!-- ===================== EJERCICIO PREMIOS ===================== -->
+  <div class="card">
+    <div class="card-header">
+      <h2><span class="badge-ej">🎁 EJERCICIO 1 · PREMIOS</span> Tabla de puntos y premios (BUSCARV aproximado)</h2>
+      <div class="btn-group">
+        <button class="validar-seccion" data-seccion="premios">✔️ Validar sección</button>
+        <button class="rellenar-seccion" data-seccion="premios">📥 Mostrar premios correctos</button>
+      </div>
+    </div>
+    <div style="overflow-x: auto;">
+      <table id="tabla-premios">
+        <thead>
+          <tr><th>Ganador</th><th>Nº de puntos</th><th>Premio (tú respuesta)</th><th>Estado</th></tr>
+        </thead>
+        <tbody id="tbody-premios"></tbody>
+      </table>
+    </div>
+    <div class="mensaje-resumen" id="resumen-premios"></div>
+    <div class="nota-excel">
+      📌 <strong>Matriz de premios (BUSCARV con aproximado / VERDADERO):</strong><br>
+      500 puntos → "Una camiseta y un bolso deportivo"<br>
+      1000 puntos → "Un discman"<br>
+      2000 puntos → "Un equipo de música"<br>
+      4000 puntos → "Una computadora"<br>
+      ⚡ Para puntos intermedios (ej. 600) se devuelve el premio del límite inferior (500). Para 4050 → premio de 4000.
+    </div>
+  </div>
+
+  <!-- ===================== EJERCICIO EMPLEADOS ===================== -->
+  <div class="card">
+    <div class="card-header">
+      <h2><span class="badge-ej">👥 EJERCICIO 2 · EMPLEADOS</span> BUSCARV por Legajo (Apellido y Sueldo)</h2>
+      <div class="btn-group">
+        <button class="validar-seccion" data-seccion="empleados">✔️ Validar sección</button>
+        <button class="rellenar-seccion" data-seccion="empleados">📥 Completar con datos correctos</button>
+      </div>
+    </div>
+    <div style="overflow-x: auto;">
+      <table id="tabla-empleados">
+        <thead>
+          <tr><th>Legajo</th><th>Apellido y Nombre (tú respuesta)</th><th>Sueldo Básico (tú respuesta)</th><th>Estado</th></tr>
+        </thead>
+        <tbody id="tbody-empleados"></tbody>
+      </table>
+    </div>
+    <div class="mensaje-resumen" id="resumen-empleados"></div>
+    <div class="nota-excel">
+      🧑‍💼 <strong>Matriz de empleados (BUSCARV exacto con FALSO):</strong><br>
+      Legajo 1000 → "ARREGUI, Alejandra" · Sueldo $1.500<br>
+      Legajo 1001 → "LIMERICK, Santiago" · Sueldo $980<br>
+      Legajo 1002 → "MARTOREL, Federico" · Sueldo $760<br>
+      Legajo 1003 → "PEREZ, Patricio" · Sueldo $1.200<br>
+      Legajo 1004 → "SANCHEZ, Marina" · Sueldo $890
+    </div>
+  </div>
+
+  <!-- ===================== EJERCICIO BARCOS (no hay datos) ===================== -->
+  <div class="card">
+    <div class="card-header">
+      <h2><span class="badge-ej">⛵ EJERCICIO 3 · BARCOS</span> (sin datos en el PDF)</h2>
+    </div>
+    <div class="nota-excel" style="background: #fff3e0; margin: 20px;">
+      ℹ️ El ejercicio "BARCOS" se menciona en el PDF pero no se incluyen los datos necesarios para completarlo. 
+      Por lo tanto, no se puede validar. Se recomienda revisar el material original para practicar BUSCARV con esa tabla.
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: center; gap: 20px; margin: 20px 0 10px;">
+    <button id="validarTodoBtn" class="primary" style="padding: 10px 32px;">✅ VALIDAR TODO</button>
+    <button id="limpiarTodoBtn" style="padding: 10px 28px;">🧹 Limpiar todos los campos</button>
+  </div>
+  <footer>
+    Validador interactivo basado en la lógica de BUSCARV (aproximado y exacto).<br>
+    Para PREMIOS se utiliza coincidencia aproximada (VERDADERO). Para EMPLEADOS coincidencia exacta (FALSO).
+  </footer>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // DATOS CORRECTOS SEGÚN LOS EJERCICIOS (extraídos del PDF)
+  // --------------------------------------------------------------
+
+  // EJERCICIO 1: PREMIOS
+  const ganadores = [
+    { nombre: "Antonio Fernández", puntos: 600 },
+    { nombre: "Catalina Lago", puntos: 1200 },
+    { nombre: "Roberto Vega", puntos: 900 },
+    { nombre: "Luis Ferrer", puntos: 2100 },
+    { nombre: "Ana Sánchez", puntos: 500 },
+    { nombre: "José Alonso", puntos: 4050 }
+  ];
+
+  // Tabla de premios (límite inferior, premio)
+  const tablaPremios = [
+    { limite: 500, premio: "Una camiseta y un bolso deportivo" },
+    { limite: 1000, premio: "Un discman" },
+    { limite: 2000, premio: "Un equipo de música" },
+    { limite: 4000, premio: "Una computadora" }
+  ];
+
+  // Función BUSCARV aproximado (devuelve el premio para el puntaje)
+  function buscarPremio(puntos) {
+    // Se asume orden ascendente por límite
+    let premioAsignado = null;
+    for (let i = 0; i < tablaPremios.length; i++) {
+      if (puntos >= tablaPremios[i].limite) {
+        premioAsignado = tablaPremios[i].premio;
+      } else {
+        break;
+      }
+    }
+    return premioAsignado;
+  }
+
+  // Validación para cada ganador (resultado esperado)
+  function getPremioCorrecto(puntos) {
+    if (puntos >= 4000) return "Una computadora";
+    if (puntos >= 2000) return "Un equipo de música";
+    if (puntos >= 1000) return "Un discman";
+    if (puntos >= 500) return "Una camiseta y un bolso deportivo";
+    return "Sin premio"; // según tabla, 500 es el mínimo
+  }
+
+  // EJERCICIO 2: EMPLEADOS
+  const empleadosMatriz = [
+    { legajo: 1000, nombreCompleto: "ARREGUI, Alejandra", sueldo: 1500 },
+    { legajo: 1001, nombreCompleto: "LIMERICK, Santiago", sueldo: 980 },
+    { legajo: 1002, nombreCompleto: "MARTOREL, Federico", sueldo: 760 },
+    { legajo: 1003, nombreCompleto: "PEREZ, Patricio", sueldo: 1200 },
+    { legajo: 1004, nombreCompleto: "SANCHEZ, Marina", sueldo: 890 }
+  ];
+
+  function getNombrePorLegajo(legajo) {
+    const emp = empleadosMatriz.find(e => e.legajo === legajo);
+    return emp ? emp.nombreCompleto : null;
+  }
+  function getSueldoPorLegajo(legajo) {
+    const emp = empleadosMatriz.find(e => e.legajo === legajo);
+    return emp ? emp.sueldo : null;
+  }
+
+  // --------------------------------------------------------------
+  // RENDERIZADO DE TABLAS DINÁMICAS
+  // --------------------------------------------------------------
+  function renderPremios() {
+    const tbody = document.getElementById('tbody-premios');
+    tbody.innerHTML = '';
+    ganadores.forEach((g, idx) => {
+      const row = tbody.insertRow();
+      row.insertCell(0).innerHTML = `<strong>${g.nombre}</strong>`;
+      row.insertCell(1).innerHTML = `<span class="dato-fijo">${g.puntos}</span>`;
+      // input para premio
+      row.insertCell(2).innerHTML = `<input type="text" id="premio_${idx}" placeholder="Escribe el premio" size="30" style="width:220px;">`;
+      row.insertCell(3).innerHTML = `<span id="premio_status_${idx}" class="estado">⚪</span>`;
+    });
+  }
+
+  function renderEmpleados() {
+    const tbody = document.getElementById('tbody-empleados');
+    tbody.innerHTML = '';
+    empleadosMatriz.forEach((emp, idx) => {
+      const row = tbody.insertRow();
+      row.insertCell(0).innerHTML = `<span class="dato-fijo">${emp.legajo}</span>`;
+      row.insertCell(1).innerHTML = `<input type="text" id="nombre_${idx}" placeholder="Apellido y Nombre" style="width:220px;">`;
+      row.insertCell(2).innerHTML = `<input type="number" step="any" id="sueldo_${idx}" placeholder="Sueldo \$">`;
+      row.insertCell(3).innerHTML = `<span id="empleado_status_${idx}" class="estado">⚪</span>`;
+    });
+  }
+
+  // --------------------------------------------------------------
+  // FUNCIONES DE VALIDACIÓN
+  // --------------------------------------------------------------
+  function validarPremios() {
+    let aciertos = 0;
+    for (let i = 0; i < ganadores.length; i++) {
+      const puntos = ganadores[i].puntos;
+      const premioCorrecto = getPremioCorrecto(puntos);
+      const userPremio = document.getElementById(`premio_${i}`)?.value?.trim();
+      const statusSpan = document.getElementById(`premio_status_${i}`);
+      
+      // Normalizamos para comparación (sin sensibilidad a mayúsculas/minúsculas y espacios)
+      const normalizar = (str) => str.toLowerCase().replace(/\s+/g, ' ').trim();
+      const esCorrecto = userPremio && normalizar(userPremio) === normalizar(premioCorrecto);
+      
+      if (esCorrecto) {
+        statusSpan.innerHTML = '<span class="correcto">✓ Correcto</span>';
+        aciertos++;
+      } else {
+        statusSpan.innerHTML = `<span class="incorrecto">✗ Debe ser: "${premioCorrecto}"</span>`;
+      }
+    }
+    const total = ganadores.length;
+    document.getElementById('resumen-premios').innerHTML = `🎁 Premios correctos: ${aciertos}/${total} ${aciertos === total ? '🏆 Perfecto' : 'Revisa la función BUSCARV aproximada'}`;
+    return aciertos;
+  }
+
+  function validarEmpleados() {
+    let aciertos = 0;
+    for (let i = 0; i < empleadosMatriz.length; i++) {
+      const legajo = empleadosMatriz[i].legajo;
+      const nombreCorrecto = getNombrePorLegajo(legajo);
+      const sueldoCorrecto = getSueldoPorLegajo(legajo);
+      
+      const userNombre = document.getElementById(`nombre_${i}`)?.value?.trim();
+      const userSueldo = parseFloat(document.getElementById(`sueldo_${i}`)?.value);
+      const statusSpan = document.getElementById(`empleado_status_${i}`);
+      
+      const nombreOk = userNombre && userNombre.toLowerCase().trim() === nombreCorrecto.toLowerCase().trim();
+      const sueldoOk = !isNaN(userSueldo) && Math.abs(userSueldo - sueldoCorrecto) <= 0.01;
+      
+      if (nombreOk && sueldoOk) {
+        statusSpan.innerHTML = '<span class="correcto">✓ Correcto</span>';
+        aciertos++;
+      } else {
+        let errores = [];
+        if (!nombreOk) errores.push(`Nombre: "${nombreCorrecto}"`);
+        if (!sueldoOk) errores.push(`Sueldo: $${sueldoCorrecto}`);
+        statusSpan.innerHTML = `<span class="incorrecto">✗ ${errores.join(' · ')}</span>`;
+      }
+    }
+    const total = empleadosMatriz.length;
+    document.getElementById('resumen-empleados').innerHTML = `👥 Empleados correctos: ${aciertos}/${total} ${aciertos === total ? '✅ BUSCARV exacto dominado' : 'Revisa los valores buscados'}`;
+    return aciertos;
+  }
+
+  // RELLENAR RESPUESTAS CORRECTAS (mostrar soluciones)
+  function rellenarPremios() {
+    for (let i = 0; i < ganadores.length; i++) {
+      const premioCorrecto = getPremioCorrecto(ganadores[i].puntos);
+      const inputPremio = document.getElementById(`premio_${i}`);
+      if (inputPremio) inputPremio.value = premioCorrecto;
+    }
+    validarPremios();
+  }
+
+  function rellenarEmpleados() {
+    for (let i = 0; i < empleadosMatriz.length; i++) {
+      const emp = empleadosMatriz[i];
+      const inputNombre = document.getElementById(`nombre_${i}`);
+      const inputSueldo = document.getElementById(`sueldo_${i}`);
+      if (inputNombre) inputNombre.value = emp.nombreCompleto;
+      if (inputSueldo) inputSueldo.value = emp.sueldo;
+    }
+    validarEmpleados();
+  }
+
+  function limpiarTodo() {
+    // Limpiar inputs de premios
+    for (let i = 0; i < ganadores.length; i++) {
+      const inp = document.getElementById(`premio_${i}`);
+      if (inp) inp.value = '';
+      const statusSpan = document.getElementById(`premio_status_${i}`);
+      if (statusSpan) statusSpan.innerHTML = '⚪';
+    }
+    // Limpiar inputs de empleados
+    for (let i = 0; i < empleadosMatriz.length; i++) {
+      const inpNom = document.getElementById(`nombre_${i}`);
+      const inpSue = document.getElementById(`sueldo_${i}`);
+      if (inpNom) inpNom.value = '';
+      if (inpSue) inpSue.value = '';
+      const statusSpan = document.getElementById(`empleado_status_${i}`);
+      if (statusSpan) statusSpan.innerHTML = '⚪';
+    }
+    document.getElementById('resumen-premios').innerHTML = '';
+    document.getElementById('resumen-empleados').innerHTML = '';
+  }
+
+  function validarTodo() {
+    validarPremios();
+    validarEmpleados();
+  }
+
+  // --------------------------------------------------------------
+  // EVENTOS Y RENDER INICIAL
+  // --------------------------------------------------------------
+  document.addEventListener('DOMContentLoaded', () => {
+    renderPremios();
+    renderEmpleados();
+
+    // Botones por sección
+    document.querySelectorAll('.validar-seccion').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const sec = btn.getAttribute('data-seccion');
+        if (sec === 'premios') validarPremios();
+        else if (sec === 'empleados') validarEmpleados();
+      });
+    });
+    document.querySelectorAll('.rellenar-seccion').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const sec = btn.getAttribute('data-seccion');
+        if (sec === 'premios') rellenarPremios();
+        else if (sec === 'empleados') rellenarEmpleados();
+      });
+    });
+    document.getElementById('validarTodoBtn').addEventListener('click', validarTodo);
+    document.getElementById('limpiarTodoBtn').addEventListener('click', limpiarTodo);
+  });
+</script>
+</body>
+</html>
